@@ -4,7 +4,8 @@
   "author": "Jon Jensen",
   "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test-server": "npm run build && http-server"
   },
   "type": "module",
   "exports": {
@@ -19,10 +20,13 @@
   },
   "types": "./dist/types.d.ts",
   "files": [
+    "LICENSE.md",
     "dist/**/*"
   ],
   "directories": {},
   "devDependencies": {
+    "http-server": "^14.1.1",
     "typescript": "^4.9.4"
-  }
+  },
+  "license": "ISC"
 }
