@@ -1,0 +1,28 @@
+{
+  "name": "formdata-submitter-polyfill",
+  "version": "0.0.1",
+  "author": "Jon Jensen",
+  "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
+  "scripts": {
+    "build": "tsc"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/polyfills/full.js",
+      "types": "./dist/types.d.ts"
+    },
+    "./lite": {
+      "import": "./dist/polyfills/lite.js",
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "directories": {},
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
