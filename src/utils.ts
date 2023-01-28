@@ -101,11 +101,20 @@ export function validateFormDataConstructorParameters(
 }
 
 export function polyfillFormDataIfNecessary(NewFormData: typeof FormData) {
-  if (
-    typeof document !== "undefined" &&
-    window.FormData.constructor.length === 1
-  ) {
-    window.FormData = NewFormData;
-    trackImageButtonActivation();
+  if (typeof document === "undefined") return; // not in a browser, so 🤷‍♂️
+  if (window.FormData.length >= 2) return; // maybe already polyfilled? 🤞
+  try {
+    // otherwise we have to do this silliness, since native functions don't expose an arity 🙃
+    new window.FormData(
+      document.createElement("form"),
+      document.createElement("button")
+    );
+  } catch (e) {
+    if (e instanceof DOMException) return; // yey it's supported, our work is done here 🚀
+    throw e; // something else happened 🤔
   }
+
+  // it didn't validate the invalid submitter, so let's do this 🥳
+  window.FormData = NewFormData;
+  trackImageButtonActivation();
 }
