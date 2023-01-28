@@ -4,7 +4,7 @@ declare global {
   interface Window {
     FormData: {
       prototype: FormData;
-      new (form?: HTMLFormElement, submitter?: HTMLElement): FormData;
+      new (form?: HTMLFormElement, submitter?: HTMLElement | null): FormData;
     };
   }
 }
