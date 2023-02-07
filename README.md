@@ -36,13 +36,13 @@ myform.addEventListener("submit", (event) => {
 });
 ```
 
-These `FormData` objects are equivalent to the form data set constructed by equivalent native form submissions.
+These `FormData` objects are equivalent to the form data sets constructed by equivalent native form submissions.
 
 If you also need to polyfill the `submitter` property of the `SubmitEvent`, consider using the [`event-submitter-polyfill`](https://www.npmjs.com/package/event-submitter-polyfill) package alongside this one.
 
 ### TypeScript
 
-The latest [TypeScript DOM types](https://www.npmjs.com/package/@types/web) correctly include the `submitter` parameter. If you are using older ones (e.g. the built-in types that shipped with your version of TypeScript), you can get the latest by running:
+The latest [TypeScript DOM types](https://www.npmjs.com/package/@types/web) support the `submitter` parameter. If you are using older DOM types (e.g. the ones that shipped with your version of TypeScript), you can get the latest by running:
 
 ```bash
 npm install @typescript/lib-dom@npm:@types/web --save-dev
