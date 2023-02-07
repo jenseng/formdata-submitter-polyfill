@@ -102,9 +102,9 @@ export function validateFormDataConstructorParameters(
 
 export function polyfillFormDataIfNecessary(NewFormData: typeof FormData) {
   if (typeof document === "undefined") return; // not in a browser, so 🤷‍♂️
-  if (window.FormData.length >= 2) return; // maybe already polyfilled? 🤞
+  if (window.FormData.toString().match(/^class.*constructor\([^,]+,/s)) return; // looks like we've already polyfilled? 🤞
   try {
-    // otherwise we have to do this silliness, since native functions don't expose an arity 🙃
+    // otherwise do a one-time check to see if the native FormData supports submitter 🙃
     new window.FormData(
       document.createElement("form"),
       document.createElement("button")

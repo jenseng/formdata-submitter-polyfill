@@ -6,7 +6,7 @@ import {
 
 polyfillFormDataIfNecessary(
   class FormData extends window["FormData"] {
-    constructor(form?: HTMLFormElement, submitter: HTMLElement | null = null) {
+    constructor(form?: HTMLFormElement, submitter?: HTMLElement | null) {
       if (form == null || submitter == null) {
         super(form);
         return;
