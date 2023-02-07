@@ -14,23 +14,41 @@ Then import it early in your client entrypoint .js file, e.g.
 import "formdata-submitter-polyfill";
 ```
 
-Now you can reliably create `FormData` objects populated from both a form and a `submitter`, e.g.
+Now you can reliably create `FormData` objects populated from both a form and a `submitter`. A common scenario for this is in form submission handlers, e.g.
 
 ```javascript
 var myform = document.createElement("form");
-myform.innerHTML =
-  "<input name=foo value=Foo><button name=go value=GO>go!</button><input type=image><input name=bar value=BAR>";
-new FormData(myform, myform.querySelector("button"));
-// ▸ FormData(3) { foo → "Foo", go → "GO", bar → "BAR" }
-new FormData(myform, myform.querySelector("input[type=image]"));
-// ▸ FormData(4) { foo → "Foo", x → "0", y → "0", bar → "BAR" }
+myform.innerHTML = `
+  <input name=foo value=FOO>
+  <button name=go value=GO>go!</button>
+  <input type=image>
+  <input name=bar value=BAR>
+`;
+myform.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target, event.submitter);
+  // If the button is the submitter:
+  // ▸ FormData(3) { foo → "FOO", go → "GO", bar → "BAR" }
+  // If the image button is the submitter:
+  // ▸ FormData(4) { foo → "FOO", x → "0", y → "0", bar → "BAR" }
+
+  // ... do something with formData ...
+});
 ```
 
-These `FormData` entries are equivalent to the form data set constructed by native form submissions.
+These `FormData` entries are equivalent to the form data set constructed an equivalent native form submissions.
+
+If you also need to polyfill the `submitter` property of the `SubmitEvent`, consider using the [`event-submitter-polyfill`](https://www.npmjs.com/package/event-submitter-polyfill) package alongside this one.
 
 ### TypeScript
 
-The polyfill doesn't provide any _global_ `FormData` typings, as variable declarations cannot be changed (i.e. TypeScript's `lib/lib.dom.d.ts` defines the `FormData` constructor with a single parameter). Until TypeScript's built-in types are updated to support this new feature, you'll either want to use `window.FormData` (correctly typed by this polyfill) or add a `// @ts-expect-error` comment.
+The latest [TypeScript DOM types](https://www.npmjs.com/package/@types/web) correctly include the `submitter` parameter. If you are using older ones (e.g. the built-in types that shipped with your version of TypeScript), you can get the latest by running:
+
+```bash
+npm install @typescript/lib-dom@npm:@types/web --save-dev
+```
+
+If for some reason you can't upgrade yet, in the meantime you can add a `// @ts-expect-error` comment to make TypeScript happy 🙈.
 
 ### Lightweight mode
 
@@ -45,13 +63,11 @@ import "formdata-submitter-polyfill/lightweight";
 This will instead create a `submitter`-less `FormData` object and then append `submitter` entries (as appropriate) to the end of the list, e.g.
 
 ```javascript
-var myform = document.createElement("form");
-myform.innerHTML =
-  "<input name=foo value=Foo><button name=go value=GO>go!</button><input type=image><input name=bar value=BAR>";
-new FormData(myform, myform.querySelector("button"));
-// ▸ FormData(3) { foo → "Foo", bar → "BAR", go → "GO" }
-new FormData(myform, myform.querySelector("input[type=image]"));
-// ▸ FormData(4) { foo → "Foo", bar → "BAR", x → "0", y → "0" }
+const formData = new FormData(event.target, event.submitter);
+// If the button is the submitter:
+// ▸ FormData(3) { foo → "FOO", bar → "BAR", go → "GO" }
+// If the image button is the submitter:
+// ▸ FormData(4) { foo → "FOO", bar → "BAR", x → "0", y → "0" }
 ```
 
 #### Gotchas

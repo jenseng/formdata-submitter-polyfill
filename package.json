@@ -1,22 +1,21 @@
 {
   "name": "formdata-submitter-polyfill",
   "description": "Support the submitter parameter to the FormData constructor in older browsers.",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "author": "Jon Jensen",
   "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf dist",
     "test-server": "npm run build && http-server"
   },
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/polyfills/full.js",
-      "types": "./dist/types.d.ts"
+      "import": "./dist/polyfills/full.js"
     },
     "./lite": {
-      "import": "./dist/polyfills/lite.js",
-      "types": "./dist/types.d.ts"
+      "import": "./dist/polyfills/lite.js"
     }
   },
   "types": "./dist/types.d.ts",
@@ -26,6 +25,7 @@
   ],
   "directories": {},
   "devDependencies": {
+    "@typescript/lib-dom": "npm:@types/web@^0.0.91",
     "http-server": "^14.1.1",
     "typescript": "^4.9.4"
   },
