@@ -36,7 +36,7 @@ myform.addEventListener("submit", (event) => {
 });
 ```
 
-These `FormData` entries are equivalent to the form data set constructed an equivalent native form submissions.
+These `FormData` objects are equivalent to the form data set constructed by equivalent native form submissions.
 
 If you also need to polyfill the `submitter` property of the `SubmitEvent`, consider using the [`event-submitter-polyfill`](https://www.npmjs.com/package/event-submitter-polyfill) package alongside this one.
 
