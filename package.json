@@ -1,7 +1,18 @@
 {
   "name": "formdata-submitter-polyfill",
   "description": "Support the submitter parameter to the FormData constructor in older browsers.",
-  "version": "1.0.0",
+  "keywords": [
+    "FormData",
+    "constructor",
+    "submitter",
+    "submit",
+    "polyfill",
+    "form",
+    "button",
+    "entry",
+    "typescript"
+  ],
+  "version": "1.0.1",
   "author": "Jon Jensen",
   "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
   "scripts": {
