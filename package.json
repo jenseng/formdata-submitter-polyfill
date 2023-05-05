@@ -23,10 +23,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/polyfills/full.js"
+      "import": "./dist/full.js"
     },
     "./lite": {
-      "import": "./dist/polyfills/lite.js"
+      "import": "./dist/lite.js"
+    },
+    "./impl": {
+      "types": "./dist/impl/index.d.ts",
+      "import": "./dist/impl/index.js"
     }
   },
   "types": "./dist/types.d.ts",

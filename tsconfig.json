@@ -7,6 +7,7 @@
     "lib": ["ES2015", "dom"],
     "strict": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true
   }
 }

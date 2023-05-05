@@ -50,6 +50,20 @@ npm install @typescript/lib-dom@npm:@types/web --save-dev
 
 If for some reason you can't upgrade yet, in the meantime you can add a `// @ts-expect-error` comment to make TypeScript happy 🙈.
 
+### Additional Exports
+
+If you want more control over how/when the polyfill is activated, you can use the exports provided by `formdata-submitter-polyfill/impl`. For example:
+
+```typescript
+import {
+  FormData,
+  polyfillFormDataIfNecessary,
+} from "formdata-submitter-polyfill/impl";
+
+// this will replace window.FormData with the polyfill if necessary
+polyfillFormDataIfNecessary(FormData);
+```
+
 ### Lightweight mode
 
 By default, the polyfill fully supports the [form entry list construction algorithm](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#constructing-the-form-data-set), i.e. ensuring that image button and named button submitters are encoded in tree order. It accomplishes this by temporarily tweaking the form during submission to get the right entries.
@@ -57,7 +71,7 @@ By default, the polyfill fully supports the [form entry list construction algori
 While this performs well, you can get faster (but less compliant) behavior by doing:
 
 ```javascript
-import "formdata-submitter-polyfill/lightweight";
+import "formdata-submitter-polyfill/lite";
 ```
 
 This will instead create a `submitter`-less `FormData` object and then append `submitter` entries (as appropriate) to the end of the list, e.g.
