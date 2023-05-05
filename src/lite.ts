@@ -1,3 +1,3 @@
-import { FormDataLite, polyfillFormDataIfNecessary } from "./impl/index.js";
+import { FormDataLite, polyfillFormDataIfNecessary } from "./impl.js";
 
 polyfillFormDataIfNecessary(FormDataLite);

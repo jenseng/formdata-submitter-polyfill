@@ -16,24 +16,25 @@
   "author": "Jon Jensen",
   "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup src/*.ts --dts --minify --format esm,cjs --splitting",
     "clean": "rm -rf dist",
     "test-server": "npm run build && http-server"
   },
-  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/full.js"
+      "import": "./dist/full.mjs",
+      "require": "./dist/full.js"
     },
     "./lite": {
-      "import": "./dist/lite.js"
+      "import": "./dist/lite.mjs",
+      "require": "./dist/lite.js"
     },
     "./impl": {
-      "types": "./dist/impl/index.d.ts",
-      "import": "./dist/impl/index.js"
+      "types": "./dist/impl.d.ts",
+      "import": "./dist/impl.mjs",
+      "require": "./dist/impl.js"
     }
   },
-  "types": "./dist/types.d.ts",
   "files": [
     "LICENSE.md",
     "dist/**/*"
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@typescript/lib-dom": "npm:@types/web@^0.0.91",
     "http-server": "^14.1.1",
+    "tsup": "^6.7.0",
     "typescript": "^4.9.4"
   },
   "license": "ISC"

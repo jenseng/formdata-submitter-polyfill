@@ -102,16 +102,12 @@ export function validateFormDataConstructorParameters(
 
 export function polyfillFormDataIfNecessary(NewFormData: typeof FormData) {
   if (typeof document === "undefined") return; // not in a browser, so 🤷‍♂️
-  if (window.FormData.toString().match(/^class.*constructor\([^,]+,/s)) return; // looks like we've already polyfilled? 🤞
   try {
-    // otherwise do a one-time check to see if the native FormData supports submitter 🙃
-    new window.FormData(
-      document.createElement("form"),
-      document.createElement("button")
-    );
+    // do a one-time check to see if the native FormData supports submitter 🙃
+    // @ts-expect-error
+    new window.FormData(undefined, "not a submitter");
   } catch (e) {
-    if (e instanceof DOMException) return; // yey it's supported, our work is done here 🚀
-    throw e; // something else happened 🤔
+    return; // yey it's supported, our work is done here 🚀
   }
 
   // it didn't validate the invalid submitter, so let's do this 🥳
