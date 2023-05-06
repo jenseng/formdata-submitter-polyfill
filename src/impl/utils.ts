@@ -79,24 +79,29 @@ export function getEntriesForSubmitter(
 }
 
 export function validateFormDataConstructorParameters(
-  form: HTMLFormElement,
-  submitter: unknown
-): asserts submitter is SubmitButton {
-  if (!(form instanceof HTMLFormElement)) {
+  args: unknown[]
+): asserts args is [
+  HTMLFormElement | undefined,
+  SubmitButton | null | undefined
+] {
+  const [form, submitter] = args;
+  if (form !== undefined && !(form instanceof HTMLFormElement)) {
     throw new TypeError(
       "Failed to construct 'FormData': parameter 1 is not of type 'HTMLFormElement'"
     );
   }
-  if (!isSubmitButton(submitter)) {
-    throw new TypeError(
-      "Failed to construct 'FormData': The specified element is not a submit button."
-    );
-  }
-  if (submitter.form !== form) {
-    throw new DOMException(
-      "Failed to construct 'FormData': The specified element is not owned by this form element",
-      "NotFoundError"
-    );
+  if (submitter != null) {
+    if (!isSubmitButton(submitter)) {
+      throw new TypeError(
+        "Failed to construct 'FormData': The specified element is not a submit button."
+      );
+    }
+    if (form && submitter.form !== form) {
+      throw new DOMException(
+        "Failed to construct 'FormData': The specified element is not owned by this form element",
+        "NotFoundError"
+      );
+    }
   }
 }
 

@@ -4,13 +4,16 @@ import {
 } from "./utils.js";
 
 export class FormData extends window["FormData"] {
-  constructor(form?: HTMLFormElement, submitter?: HTMLElement | null) {
-    if (form == null || submitter == null) {
+  constructor(
+    ...args: [HTMLFormElement | undefined, HTMLElement | null | undefined]
+  ) {
+    validateFormDataConstructorParameters(args);
+    const [form, submitter] = args;
+
+    if (!form || submitter == null) {
       super(form);
       return;
     }
-
-    validateFormDataConstructorParameters(form, submitter);
 
     // Explicitly disable the submitter; some browsers (old Safari) unilaterally include it if it was activated,
     // and we don't want it in the FormData entry list twice 🙃

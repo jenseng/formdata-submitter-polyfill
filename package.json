@@ -12,7 +12,7 @@
     "entry",
     "typescript"
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Jon Jensen",
   "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
   "scripts": {

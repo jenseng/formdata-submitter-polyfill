@@ -4,13 +4,16 @@ import {
 } from "./utils.js";
 
 export class FormData extends window["FormData"] {
-  constructor(form?: HTMLFormElement, submitter: HTMLElement | null = null) {
-    if (!form || !submitter) {
+  constructor(
+    ...args: [HTMLFormElement | undefined, HTMLElement | null | undefined]
+  ) {
+    validateFormDataConstructorParameters(args);
+    const [form, submitter] = args;
+
+    if (!form || submitter == null) {
       super(form);
       return;
     }
-
-    validateFormDataConstructorParameters(form, submitter);
 
     // Populate the dataset
     super(form);
