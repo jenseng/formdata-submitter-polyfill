@@ -110,7 +110,7 @@ export function polyfillFormDataIfNecessary(NewFormData: typeof FormData) {
   try {
     // do a one-time check to see if the native FormData supports submitter 🙃
     // @ts-expect-error
-    new window.FormData(undefined, "not a submitter");
+    new window.FormData(document.createElement("form"), "not a submitter");
   } catch (e) {
     return; // yey it's supported, our work is done here 🚀
   }
