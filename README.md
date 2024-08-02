@@ -4,6 +4,20 @@ Support the `submitter` parameter to the [FormData constructor](https://develope
 
 ## Usage
 
+### Installation
+
+#### CDN
+
+Polyfill CDN with *auto detecting* feature:
+
+```html
+<head>
+    <script src="https://polyfill.web-cell.dev/feature/FormDataSubmitter.js"></script>
+</head>
+```
+
+#### NPM
+
 ```bash
 npm install --save formdata-submitter-polyfill
 ```
@@ -13,6 +27,8 @@ Then import it early in your client entrypoint .js file, e.g.
 ```javascript
 import "formdata-submitter-polyfill";
 ```
+
+### Initialization
 
 Now you can reliably create `FormData` objects populated from both a form and a `submitter`. A common scenario for this is in form submission handlers, e.g.
 

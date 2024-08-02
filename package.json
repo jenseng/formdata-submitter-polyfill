@@ -16,10 +16,11 @@
   "author": "Jon Jensen",
   "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
   "scripts": {
-    "build": "tsup src/*.ts --dts --minify --format esm,cjs --splitting",
+    "build": "tsup src/*.ts --dts --minify --format esm,cjs,iife --splitting",
     "clean": "rm -rf dist",
     "test-server": "npm run build && http-server"
   },
+  "main": "dist/full.global.js",m
   "exports": {
     ".": {
       "import": "./dist/full.mjs",
