@@ -20,7 +20,7 @@
     "clean": "rm -rf dist",
     "test-server": "npm run build && http-server"
   },
-  "main": "dist/full.global.js",m
+  "main": "dist/full.global.js",
   "exports": {
     ".": {
       "import": "./dist/full.mjs",
