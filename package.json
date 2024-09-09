@@ -19,7 +19,7 @@
   ],
   "homepage": "https://github.com/jenseng/formdata-submitter-polyfill",
   "scripts": {
-    "build": "tsup src/*.ts --dts --minify --format esm,cjs,iife --splitting",
+    "build": "tsup src/*.ts --global-name FormDataSubmitterPolyfill --dts --sourcemap --minify --format esm,cjs,iife --splitting",
     "clean": "rm -rf dist",
     "test-server": "npm run build && http-server"
   },
