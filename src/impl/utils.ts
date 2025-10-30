@@ -49,7 +49,7 @@ export function addTemporarySubmitterFieldsInTreeOrder(
     field.type = "hidden";
     field.name = name;
     field.value = String(value);
-    if (isExternalSubmitter) field.setAttribute("form", form.id);
+    if (isExternalSubmitter) field.setAttribute("form", form.getAttribute("id") ?? "");
     tempFieldContainer.insertAdjacentElement("beforeend", field);
   }
 

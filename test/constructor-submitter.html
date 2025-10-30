@@ -4,6 +4,20 @@
 <link ref='help' href='https://xhr.spec.whatwg.org/#dom-formdata'>
 <script src='/test/resources/testharness.js'></script>
 <script src='/test/resources/testharnessreport.js'></script>
+<script>
+  function removeSubmitterSupport() {
+    class FormData extends window["FormData"] {
+      constructor(arg) {
+        super(arg);
+      }
+    }
+    window.FormData = FormData
+  }
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('emulate-no-submitter-support')) {
+    removeSubmitterSupport();
+  }
+</script>
 <script src='/dist/full.mjs' type="module"></script>
 
 <button name=outerNamed value=GO form='myform'></button>
@@ -16,6 +30,7 @@
   <input type=image id=unnamedImage src='/test/media/1x1-green.png'></button>
   <input type=image name=unactivatedImage src='/test/media/1x1-green.png'></button>
   <input name=n3 value=v3>
+  <input name=id value=id>
 </form>
 
 <form id='another'>
@@ -38,7 +53,7 @@ const form = document.querySelector('#myform');
 test(() => {
   assertFormDataEntries(
     new FormData(form, null),
-    [['n1', 'v1'], ['n3', 'v3']]
+    [['n1', 'v1'], ['n3', 'v3'], ['id', 'id']]
   );
 }, 'FormData construction should allow a null submitter'); // the use case here is so web developers can avoid null checks, e.g. `new FormData(e.target, e.submitter)`
 
@@ -62,18 +77,18 @@ test(() => {
 test(() => {
   assertFormDataEntries(
     new FormData(form, document.querySelector('[name=named]')),
-    [['n1', 'v1'], ['named', 'GO'], ['n3', 'v3']]
+    [['n1', 'v1'], ['named', 'GO'], ['n3', 'v3'], ['id', 'id']]
   );
   assertFormDataEntries(
     new FormData(form, document.querySelector('[name=outerNamed]')),
-    [['outerNamed', 'GO'], ['n1', 'v1'], ['n3', 'v3']]
+    [['outerNamed', 'GO'], ['n1', 'v1'], ['n3', 'v3'], ['id', 'id']]
   );
 }, 'The constructed FormData object should contain an in-tree-order entry for a named submit button submitter');
 
 test(() => {
   assertFormDataEntries(
     new FormData(form, document.querySelector('#unnamed')),
-    [['n1', 'v1'], ['n3', 'v3']]
+    [['n1', 'v1'], ['n3', 'v3'], ['id', 'id']]
   );
 }, 'The constructed FormData object should not contain an entry for an unnamed submit button submitter');
 
@@ -84,18 +99,18 @@ test(() => {
   submitter2.click();
   assertFormDataEntries(
     new FormData(form, submitter1),
-    [['n1', 'v1'], ['namedImage.x', '0'], ['namedImage.y', '0'], ['n3', 'v3']]
+    [['n1', 'v1'], ['namedImage.x', '0'], ['namedImage.y', '0'], ['n3', 'v3'], ['id', 'id']]
   );
   assertFormDataEntries(
     new FormData(form, submitter2),
-    [['n1', 'v1'], ['x', '0'], ['y', '0'], ['n3', 'v3']]
+    [['n1', 'v1'], ['x', '0'], ['y', '0'], ['n3', 'v3'], ['id', 'id']]
   );
 }, 'The constructed FormData object should contain in-tree-order entries for an activated Image Button submitter');
 
 test(() => {
   assertFormDataEntries(
     new FormData(form, document.querySelector('[name=unactivatedImage]')),
-    [['n1', 'v1'], ['unactivatedImage.x', '0'], ['unactivatedImage.y', '0'], ['n3', 'v3']]
+    [['n1', 'v1'], ['unactivatedImage.x', '0'], ['unactivatedImage.y', '0'], ['n3', 'v3'], ['id', 'id']]
   );
 }, 'The constructed FormData object should contain in-tree-order entries for an unactivated Image Button submitter');
 </script>
